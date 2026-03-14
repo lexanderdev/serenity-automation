@@ -72,16 +72,20 @@ test {
 
 sonar {
     properties {
-        property "sonar.projectKey", "automationserenity" // Lo sacas de SonarCloud
-        property "sonar.organization", "automationserenity" // Lo sacas de SonarCloud
+        property "sonar.projectKey", "serentyautomations"
+        property "sonar.organization", "serentyautomations"
         property "sonar.host.url", "https://sonarcloud.io"
 
-        // Configuración para que Sonar encuentre tus reportes de JUnit y Serenity
+        // Definimos src/test/java como la fuente principal de análisis
         property "sonar.sources", "src/test/java"
-        property "sonar.tests", "src/test/java"
-        property "sonar.java.binaries", "build/classes"
-        property "sonar.junit.reportPaths", "build/test-results/test"
 
+        // Dejamos sonar.tests vacío o apuntando a los features si usas Cucumber
+        property "sonar.tests", "src/test/resources/features"
+
+        // Es vital que esta ruta sea exacta para que Sonar "entienda" el código Java
+        property "sonar.java.binaries", "build/classes/java/test"
+
+        property "sonar.junit.reportPaths", "build/test-results/test"
     }
 }
 
