@@ -23,36 +23,28 @@ public class OrangeStepDefinitions {
     public void setStage (){ OnStage.setTheStage(new OnlineCast());}
 
 
-    @Given("^then Alex needs to log in to Orange$")
-    public void thenAlexneedstologintoOrange(List<OrangeData> orangeData) {
-        // Defensive checks to avoid NPEs or IndexOutOfBounds
+    @Given("^El usuario 'Admin' está autenticado en la plataforma Orange$")
+    public void usuarioAdminAutenticadoEnOrange(List<OrangeData> orangeData) {
         if (orangeData == null || orangeData.isEmpty()) {
             throw new IllegalArgumentException("No haya datos de prueba para el paso de inicio de sesión");
         }
         OrangeData data = orangeData.getFirst();
-        OnStage.theActorCalled("Alex").wasAbleTo(OpenUp.thePage(), Login.onThePage(
+        OnStage.theActorCalled("Admin").wasAbleTo(OpenUp.thePage(), Login.onThePage(
                 data.getStrUser(), data.getStrPassword()));
     }
 
-
-    @When("^Seleccionar my info desde el menu$")
-    public void seleccionarMyInfoDesdeElMenu() {
-
-
-       // OnStage.theActorInTheSpotlight().attemptsTo(Search.the(data.getStrSearch()));
+    @When("^El usuario selecciona la opción 'My Info' en el menú principal$")
+    public void usuarioSeleccionaMyInfoEnMenu() {
         OnStage.theActorInTheSpotlight().attemptsTo(Search.the());
     }
 
-    @Then("^Selecionar datos personales$")
-    public void selecionarDatosPersonales (List<OrangeData> orangeData) {
+    @Then("^El usuario visualiza la sección 'Contact Details' en los datos personales$")
+    public void usuarioVisualizaContactDetails(List<OrangeData> orangeData) {
         if (orangeData == null || orangeData.isEmpty()) {
             throw new IllegalArgumentException("No test data provided for assertion step");
         }
         OrangeData data = orangeData.getFirst();
-      OnStage.theActorInTheSpotlight().should(GivenWhenThen.seeThat(Answer.toThe(data.getStrSearch())));
-
-
-
+        OnStage.theActorInTheSpotlight().should(GivenWhenThen.seeThat(Answer.toThe(data.getStrSearch())));
     }
 
 }
