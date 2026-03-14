@@ -72,8 +72,8 @@ test {
 
 sonar {
     properties {
-        property "sonar.projectKey", "automatizaciónserenidad" // Lo sacas de SonarCloud
-        property "sonar.organization", "automatizaciónserenida" // Lo sacas de SonarCloud
+        property "sonar.projectKey", "automationserenity" // Lo sacas de SonarCloud
+        property "sonar.organization", "automationserenity" // Lo sacas de SonarCloud
         property "sonar.host.url", "https://sonarcloud.io"
 
         // Configuración para que Sonar encuentre tus reportes de JUnit y Serenity
