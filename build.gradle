@@ -78,7 +78,6 @@ sonar {
 
         // Definimos src/test/java como la fuente principal de análisis
         property "sonar.sources", "disrc/test/java"
-eq
         // Dejamos sonar.tests vacío o apuntando a los features si usas Cucumber
         property "sonar.tests", "src/test/resources/features"
 
