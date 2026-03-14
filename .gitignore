@@ -6,6 +6,7 @@
 .DS_Store
 *.class
 *.jar
+!gradle/wrapper/gradle-wrapper.jar
 *.log
 *.swp
 *.swo
