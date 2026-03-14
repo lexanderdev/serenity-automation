@@ -72,8 +72,8 @@ test {
 
 sonar {
     properties {
-        property "sonar.projectKey", "serenity-automation"
-        property "sonar.organization", "serenity-automation123"
+        property "sonar.projectKey",  "serenity-automation123"
+        property "sonar.organization", "serenity-automation"
         property "sonar.host.url", "https://sonarcloud.io"
 
         // Definimos src/test/java como la fuente principal de análisis
