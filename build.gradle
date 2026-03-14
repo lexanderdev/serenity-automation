@@ -72,13 +72,13 @@ test {
 
 sonar {
     properties {
-        property "sonar.projectKey", "serentyautomations"
-        property "sonar.organization", "serentyautomations"
+        property "sonar.projectKey", "serenity-automation"
+        property "sonar.organization", "serenity-automation123"
         property "sonar.host.url", "https://sonarcloud.io"
 
         // Definimos src/test/java como la fuente principal de análisis
-        property "sonar.sources", "src/test/java"
-
+        property "sonar.sources", "disrc/test/java"
+eq
         // Dejamos sonar.tests vacío o apuntando a los features si usas Cucumber
         property "sonar.tests", "src/test/resources/features"
 
@@ -86,6 +86,7 @@ sonar {
         property "sonar.java.binaries", "build/classes/java/test"
 
         property "sonar.junit.reportPaths", "build/test-results/test"
+        property "sonar.gradle.skipCompile", "true"
     }
 }
 

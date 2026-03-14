@@ -8,6 +8,7 @@
 *.jar
 !gradle/wrapper/gradle-wrapper.jar
 *.log
+.env
 *.swp
 *.swo
 *~
