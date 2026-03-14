@@ -1,0 +1,68 @@
+name: CI Orange
+on:
+  pull_request:
+    branches: [ "main", "develop" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # Nota: Normalmente Sonar se corre una sola vez.
+        # Si dejas la matriz, se enviarán dos reportes (uno por Java 17 y otro por 21).
+        # Generalmente basta con analizar la versión de producción (ej. 17).
+        java-version: ['21' ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # IMPORTANTE: Sonar necesita el historial completo para el análisis
+
+      - name: Set up JDK ${{ matrix.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
+
+      # Caché para SonarCloud
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle/caches
+          key: gradle-${{ runner.os }}-${{ matrix.java-version }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-${{ matrix.java-version }}-
+
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x gradlew
+
+      - name: Configurar Chrome
+        uses: browser-actions/setup-chrome@latest
+
+      # Ejecutamos construcción, tests y análisis de Sonar en un solo paso
+      - name: Build, Test and Analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew clean build sonar --info --no-daemon
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Test Reports Java ${{ matrix.java-version }}
+          path: build/reports/tests/test
+
+      - name: Upload Serenity reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Serenity Reports Java ${{ matrix.java-version }}
+          path: build/reports/serenity
