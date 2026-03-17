@@ -101,6 +101,24 @@ Después de cada ejecución el reporte HTML queda en:
 target/site/serenity/index.html
 ```
 
+## Mejoras Implementadas
+
+### Integración continua con GitHub Actions + SonarCloud
+- Pipeline CI configurado en `.github/workflows/ci.yml`
+- Se dispara automáticamente en cada Pull Request a `main` o `develop`
+- Ejecuta los tests, genera el reporte de Serenity y analiza la calidad del código con SonarCloud
+- Artefactos de test y Serenity disponibles en cada ejecución del pipeline
+
+### Reintentos automáticos en tests fallidos
+- Configurado `serenity.retry.tests = 2` en `serenity.conf` y `serenity.properties`
+- Si un escenario falla por inestabilidad (red, timing), se reintenta hasta 2 veces antes de marcarlo como fallido
+- Los tests que pasan en reintento se reportan como `COMPROMISED` en Serenity para identificar flakiness
+
+### Ejecución paralela
+- Configurado en `src/test/resources/junit-platform.properties`
+- Strategy `dynamic` con factor `0.5` — usa el 50% de los CPUs disponibles
+- Resultado medido: **3m 25s** de ejecución real vs **10m 24s** de tiempo acumulado secuencial (ahorro de ~7 minutos con 6 escenarios)
+
 ## Tecnologías Utilizadas
 
 - **[Serenity BDD](http://serenity-bdd.info/)** 4.2.1

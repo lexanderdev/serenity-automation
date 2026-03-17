@@ -3,7 +3,6 @@ plugins {
     id 'idea'
     id 'net.serenity-bdd.serenity-gradle-plugin' version '4.2.1'
     id "org.sonarqube" version "4.4.1.3373"
-    id "jacoco"
 }
 
 group = 'co.com.certification.orangetest'
@@ -53,6 +52,9 @@ dependencies {
     testImplementation "org.junit.platform:junit-platform-suite:1.10.1"
     testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
 
+    // ========= JUNIT 4 (requerido por SerenityReporter para Scenario Outline) =========
+    testImplementation "junit:junit:4.13.2"
+
 
     // ========= SELENIUM =========
     testImplementation "org.seleniumhq.selenium:selenium-java:4.21.0"
@@ -78,9 +80,6 @@ sonar {
 
         // Definimos src/test/java como la fuente principal de análisis
         property "sonar.sources", "src/test/java"
-        // Dejamos sonar.tests vacío o apuntando a los features si usas Cucumber
-        property "sonar.tests", "src/test/resources/features"
-
         // Es vital que esta ruta sea exacta para que Sonar "entienda" el código Java
         property "sonar.java.binaries", "build/classes/java/test"
 
