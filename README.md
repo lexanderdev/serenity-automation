@@ -1,13 +1,13 @@
 # Proyecto de Automatización de Pruebas para OrangeHRM
 
-![Serenity BDD](https://img.shields.io/badge/Serenity%20BDD-4.2.34-00C4CC?style=for-the-badge&logoColor=white)
-![Java](https://img.shields.io/badge/Java-21-FF6B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Cucumber](https://img.shields.io/badge/Cucumber-7.15.0-00BF63?style=for-the-badge&logo=cucumber&logoColor=white)
-![Selenium](https://img.shields.io/badge/Selenium-4.21.0-00D084?style=for-the-badge&logo=selenium&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-Realtime%20DB-FFA000?style=for-the-badge&logo=firebase&logoColor=white)
-![Gradle](https://img.shields.io/badge/Gradle-8.7-1EBBCC?style=for-the-badge&logo=gradle&logoColor=white)
-![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-0EA5E9?style=for-the-badge&logo=githubactions&logoColor=white)
-![SonarCloud](https://img.shields.io/badge/SonarCloud-Quality-FF6D00?style=for-the-badge&logo=sonarcloud&logoColor=white)
+![Serenity BDD](https://img.shields.io/badge/Serenity%20BDD-4.2.34-00FF7F?style=for-the-badge&labelColor=8A2BE2&logoColor=white)
+![Java](https://img.shields.io/badge/Java-21-FF4500?style=for-the-badge&logo=openjdk&labelColor=FF1493&logoColor=white)
+![Cucumber](https://img.shields.io/badge/Cucumber-7.15.0-00FF7F?style=for-the-badge&logo=cucumber&labelColor=00BFFF&logoColor=white)
+![Selenium](https://img.shields.io/badge/Selenium-4.21.0-00FF00?style=for-the-badge&logo=selenium&labelColor=FF6600&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-Realtime%20DB-FFCC00?style=for-the-badge&logo=firebase&labelColor=FF4500&logoColor=white)
+![Gradle](https://img.shields.io/badge/Gradle-8.7-02D4F5?style=for-the-badge&logo=gradle&labelColor=00C800&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-FF69B4?style=for-the-badge&logo=githubactions&labelColor=7B68EE&logoColor=white)
+![SonarCloud](https://img.shields.io/badge/SonarCloud-Quality-FF8C00?style=for-the-badge&logo=sonarcloud&labelColor=DC143C&logoColor=white)
 
 Este proyecto contiene pruebas de aceptación automatizadas para la aplicación [OrangeHRM](https://opensource-demo.orangehrmlive.com), desarrollado utilizando el framework Serenity BDD y el patrón de diseño Screenplay.
 
