@@ -5,9 +5,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class OrangeData {
+public class EmployeeData {
 
-    private String strUser;
-    private String strPassword;
-    private String strSearch;
+    private String firstName;
+    private String lastName;
 }

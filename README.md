@@ -1,89 +1,112 @@
 # Proyecto de Automatización de Pruebas para OrangeHRM
 
-Este proyecto contiene pruebas de aceptación automatizadas para la aplicación OrangeHRM, desarrollado utilizando el framework Serenity BDD y el patrón de diseño Screenplay.
+Este proyecto contiene pruebas de aceptación automatizadas para la aplicación [OrangeHRM](https://opensource-demo.orangehrmlive.com), desarrollado utilizando el framework Serenity BDD y el patrón de diseño Screenplay.
 
-## 🌟 Características
+## Características
 
-*   **Serenity BDD**: Genera documentación viva y reportes detallados sobre la ejecución de las pruebas.
-*   **Patrón Screenplay**: Fomenta la escritura de pruebas limpias, legibles y altamente mantenibles, centradas en las habilidades de un actor.
-*   **Behavior-Driven Development (BDD)**: Las pruebas se escriben en Gherkin (`.feature`), lo que facilita la colaboración entre desarrolladores, QAs y stakeholders.
-*   **Gradle**: Gestiona las dependencias del proyecto y facilita la ejecución de las pruebas.
-*   **Configuración Multi-ambiente**: Permite ejecutar las pruebas contra diferentes entornos (`default`, `dev`, `staging`, `prod`) cambiando un solo parámetro.
-*   **Lombok**: Reduce el código repetitivo (boilerplate) en las clases de modelo.
+- **Serenity BDD**: Genera documentación viva y reportes detallados sobre la ejecución de las pruebas.
+- **Patrón Screenplay**: Pruebas organizadas en Tasks, Questions y UserInterface con separación clara de responsabilidades.
+- **Behavior-Driven Development (BDD)**: Escenarios escritos en Gherkin (`.feature`), organizados por módulo funcional.
+- **Gradle**: Gestiona las dependencias y la ejecución de las pruebas.
+- **Configuración Multi-ambiente**: Soporta los entornos `default`, `dev`, `staging` y `prod`.
+- **Lombok**: Reduce el código repetitivo en las clases de modelo.
 
-## 📋 Prerrequisitos
+## Prerrequisitos
 
-Antes de empezar, asegúrate de tener instalado:
+- **Java JDK** 21 o superior
+- **Google Chrome** (última versión)
 
-*   **Java JDK**: Versión 21 o superior.
-*   **Navegador Web**: Google Chrome (configurado por defecto).
+## Instalación
 
-## 🚀 Instalación y Configuración
+```sh
+git clone <URL-DEL-REPOSITORIO>
+cd orange
+```
 
-1.  **Clona el repositorio**:
-    ```sh
-    git clone <URL-DEL-REPOSITORIO>
-    ```
+El proyecto usa **Gradle Wrapper** — no es necesario instalar Gradle manualmente.
 
-2.  **Navega al directorio del proyecto**:
-    ```sh
-    cd orange
-    ```
+## Ejecución de las Pruebas
 
-El proyecto utiliza el **Gradle Wrapper**, por lo que no es necesario instalar Gradle manualmente. El wrapper descargará la versión correcta de Gradle automáticamente.
-
-## ⚙️ Ejecución de las Pruebas
-
-Puedes ejecutar las pruebas desde la línea de comandos utilizando los siguientes comandos de Gradle.
-
-### Ejecución Estándar
-
-Para ejecutar todas las pruebas utilizando el ambiente por defecto (`default`):
-
+### Todos los escenarios (modo headless)
 ```sh
 ./gradlew clean test aggregate
 ```
-*(En Windows, usa `gradlew.bat clean test aggregate`)*
 
-### Ejecución por Ambientes
-
-Para ejecutar las pruebas en un ambiente específico (definido en `src/test/resources/serenity.conf`), usa la propiedad `-Denvironment`:
-
+### Con navegador visible (modo interactivo)
 ```sh
-# Ejecutar en el ambiente de Staging
-./gradlew clean test aggregate -Denvironment=staging
+./gradlew clean test aggregate -Dchrome.switches="--start-maximized"
+```
 
-# Ejecutar en el ambiente de Desarrollo
+### Con navegador visible y ejecución lenta (para depuración)
+```sh
+./gradlew clean test aggregate -Dchrome.switches="--start-maximized" -Dserenity.step.delay=1000
+```
+
+### Por ambiente
+```sh
+./gradlew clean test aggregate -Denvironment=staging
 ./gradlew clean test aggregate -Denvironment=dev
 ```
 
-### Ejecución por Tags
-
-Para ejecutar solo un subconjunto de escenarios, puedes filtrar por los tags de Cucumber definidos en tus archivos `.feature`:
-
+### Por tag
 ```sh
-# Ejecutar solo los escenarios con el tag @login
-./gradlew clean test aggregate -Dcucumber.filter.tags="@login"
+./gradlew clean test aggregate -Dcucumber.filter.tags="@smoke"
+./gradlew clean test aggregate -Dcucumber.filter.tags="@pim"
+./gradlew clean test aggregate -Dcucumber.filter.tags="@authentication"
 ```
 
-## 📊 Visualización de Reportes
+## Escenarios Implementados
 
-Después de cada ejecución, Serenity BDD genera un reporte detallado en formato HTML. Puedes encontrarlo en la siguiente ruta:
+### Módulo: Autenticación (`features/authentication/login.feature`)
+
+| Escenario | Tag | Estado |
+|---|---|---|
+| Inicio de sesión exitoso con credenciales válidas | `@smoke @login-exitoso` | ✅ Completado |
+| Inicio de sesión fallido — credenciales inválidas (×2) | `@regression @login-fallido` | ✅ Completado |
+
+### Módulo: PIM — Gestión de Empleados (`features/pim/employee_management.feature`)
+
+| Escenario | Tag | Estado |
+|---|---|---|
+| Visualización de la lista de empleados | `@smoke @employee-list` | ✅ Completado |
+| Agregar un nuevo empleado | `@regression @add-employee` | ✅ Completado |
+| Búsqueda de un empleado existente por nombre | `@regression @search-employee` | ✅ Completado |
+
+## Estructura del Proyecto
+
+```
+src/test/
+├── java/co/com/certification/orangetest/
+│   ├── runners/          # Configuración del runner (tags, glue, plugins)
+│   ├── stepdefinitions/  # Conecta los pasos Gherkin con Tasks y Questions
+│   ├── tasks/            # Lo que el actor HACE en la UI
+│   │   └── pim/
+│   ├── questions/        # Lo que el actor VERIFICA en la UI
+│   ├── userinterface/    # Locators de los elementos de la página
+│   │   └── pim/
+│   ├── model/            # POJOs para DataTables de Cucumber
+│   └── datatables/       # Transformadores de DataTable a modelos
+└── resources/
+    ├── features/
+    │   ├── authentication/
+    │   └── pim/
+    └── serenity.conf     # URLs por ambiente
+```
+
+## Reporte de Resultados
+
+Después de cada ejecución el reporte HTML queda en:
 
 ```
 target/site/serenity/index.html
 ```
 
-Abre este archivo en tu navegador para ver un desglose completo de los resultados de las pruebas, incluyendo capturas de pantalla en cada paso.
+## Tecnologías Utilizadas
 
-## 🛠️ Tecnologías Utilizadas
-
-*   **[Serenity BDD](http://serenity-bdd.info/)**: Framework de pruebas de aceptación.
-*   **[Cucumber](https://cucumber.io/)**: Herramienta para BDD.
-*   **[Java 21](https://www.oracle.com/java/)**: Lenguaje de programación.
-*   **[Gradle](https://gradle.org/)**: Herramienta de automatización de compilación.
-*   **[JUnit 5](https://junit.org/junit5/)**: Framework de pruebas para Java.
-*   **[Lombok](https://projectlombok.org/)**: Librería para reducir código boilerplate.
-
----
-Este `README.md` debería proporcionar una excelente primera impresión y toda la información necesaria para que cualquier persona pueda colaborar o ejecutar tu proyecto.
+- **[Serenity BDD](http://serenity-bdd.info/)** 4.2.1
+- **[Cucumber](https://cucumber.io/)** 7.15.0
+- **[Java](https://www.oracle.com/java/)** 21
+- **[Gradle](https://gradle.org/)**
+- **[JUnit 5](https://junit.org/junit5/)** 5.10.1
+- **[Selenium WebDriver](https://www.selenium.dev/)** 4.21.0
+- **[Lombok](https://projectlombok.org/)** 1.18.30
