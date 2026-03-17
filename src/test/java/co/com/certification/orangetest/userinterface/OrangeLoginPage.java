@@ -12,5 +12,6 @@ public class OrangeLoginPage extends PageObject {
     public static final Target SUBMIT_BUTTON = Target.the("button that shows us the academy page")
             .located(By.cssSelector("button[type='submit']"));
 
-
+    public static final Target ALERT_MESSAGE = Target.the("error alert message on login failure")
+            .located(By.cssSelector(".oxd-alert-content-text"));
 }
