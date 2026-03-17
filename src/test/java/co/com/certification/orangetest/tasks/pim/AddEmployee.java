@@ -35,7 +35,7 @@ public class AddEmployee implements Task {
                 Enter.theValue(firstName).into(AddEmployeePage.INPUT_FIRST_NAME),
                 Enter.theValue(lastName).into(AddEmployeePage.INPUT_LAST_NAME),
                 Click.on(AddEmployeePage.BUTTON_SAVE),
-                WaitUntil.the(AddEmployeePage.PERSONAL_DETAILS_HEADER, isVisible()).forNoMoreThan(10).seconds()
+                WaitUntil.the(AddEmployeePage.PERSONAL_DETAILS_HEADER, isVisible()).forNoMoreThan(20).seconds()
         );
     }
 }

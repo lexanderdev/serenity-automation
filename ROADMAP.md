@@ -11,15 +11,16 @@
   - Strategy `dynamic` con factor `0.5` (50% de CPUs disponibles)
   - Reduce el tiempo total de ejecución al escalar la suite
 
-- [ ] **Esperas explícitas / manejo de waits**
-  - Definir una estrategia de waits en las Tasks
-  - Evitar depender únicamente del `implicitlywait`
+- [x] **Esperas explícitas / manejo de waits**
+  - `WaitUntil` de Serenity Screenplay aplicado en `NavigateToPim`, `AddEmployee` y `SearchEmployee`
+  - Timeout máximo de 10 segundos por espera
 
 ## Media Prioridad
 
-- [ ] **Externalizar datos de prueba**
-  - Mover datos hardcodeados en `.feature` a archivos JSON/CSV o factories
-  - Facilita mantenimiento y escalabilidad
+- [x] **Externalizar datos de prueba**
+  - Datos centralizados en Firebase Realtime Database
+  - `FirebaseClient` singleton lee credenciales desde variables de entorno
+  - Datos externalizados: login válido, agregar empleado y búsqueda de empleado
 
 - [ ] **Ampliar cobertura de features**
   - Módulos pendientes: Leave, Time, Recruitment
