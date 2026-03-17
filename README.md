@@ -1,13 +1,13 @@
 # Proyecto de Automatización de Pruebas para OrangeHRM
 
-![Serenity BDD](https://img.shields.io/badge/Serenity%20BDD-4.2.34-499D9A?style=for-the-badge)
-![Java](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Cucumber](https://img.shields.io/badge/Cucumber-7.15.0-23D96C?style=for-the-badge&logo=cucumber&logoColor=white)
-![Selenium](https://img.shields.io/badge/Selenium-4.21.0-43B02A?style=for-the-badge&logo=selenium&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-Realtime%20DB-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
-![Gradle](https://img.shields.io/badge/Gradle-8.7-02303A?style=for-the-badge&logo=gradle&logoColor=white)
-![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
-![SonarCloud](https://img.shields.io/badge/SonarCloud-Quality-F3702A?style=for-the-badge&logo=sonarcloud&logoColor=white)
+![Serenity BDD](https://img.shields.io/badge/Serenity%20BDD-4.2.34-00C4CC?style=for-the-badge&logoColor=white)
+![Java](https://img.shields.io/badge/Java-21-FF6B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Cucumber](https://img.shields.io/badge/Cucumber-7.15.0-00BF63?style=for-the-badge&logo=cucumber&logoColor=white)
+![Selenium](https://img.shields.io/badge/Selenium-4.21.0-00D084?style=for-the-badge&logo=selenium&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-Realtime%20DB-FFA000?style=for-the-badge&logo=firebase&logoColor=white)
+![Gradle](https://img.shields.io/badge/Gradle-8.7-1EBBCC?style=for-the-badge&logo=gradle&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-0EA5E9?style=for-the-badge&logo=githubactions&logoColor=white)
+![SonarCloud](https://img.shields.io/badge/SonarCloud-Quality-FF6D00?style=for-the-badge&logo=sonarcloud&logoColor=white)
 
 Este proyecto contiene pruebas de aceptación automatizadas para la aplicación [OrangeHRM](https://opensource-demo.orangehrmlive.com), desarrollado utilizando el framework Serenity BDD y el patrón de diseño Screenplay.
 
