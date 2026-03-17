@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'net.serenity-bdd.serenity-gradle-plugin' version '4.2.1'
+    id 'net.serenity-bdd.serenity-gradle-plugin' version '4.2.34'
     id "org.sonarqube" version "4.4.1.3373"
 }
 
@@ -20,7 +20,7 @@ java {
 }
 
 ext {
-    serenityVersion = '4.2.1'
+    serenityVersion = '4.2.34'
     cucumberVersion = '7.15.0'
     junitVersion = '5.10.1'
     lombokVersion = '1.18.30'
@@ -39,7 +39,7 @@ dependencies {
     testImplementation "net.serenity-bdd:serenity-screenplay:${serenityVersion}"
     testImplementation "net.serenity-bdd:serenity-screenplay-webdriver:${serenityVersion}"
     testImplementation "net.serenity-bdd:serenity-cucumber:${serenityVersion}"
-    testImplementation "net.serenity-bdd:serenity-junit5:4.2.1"
+    testImplementation "net.serenity-bdd:serenity-junit5:${serenityVersion}"
 
 
 

@@ -9,7 +9,7 @@ Feature: Autenticación en OrangeHRM
 
   @smoke @login-exitoso
   Scenario: inicio de sesión exitoso con credenciales válidas
-    Given el usuario intenta iniciar sesión con usuario "Admin" y contraseña "admin123"
+    Given el usuario intenta iniciar sesión con credenciales válidas desde Firebase
     Then el usuario visualiza el Dashboard de OrangeHRM
 
   @regression @login-fallido

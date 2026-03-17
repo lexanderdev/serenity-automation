@@ -40,17 +40,12 @@ public class AuthenticationSteps {
         );
     }
 
-    /**
-     * Paso de prueba para escenarios donde el login mismo es lo que se valida.
-     * Recibe credenciales como parámetros para cubrir casos válidos e inválidos
-     * sin duplicar el paso.
-     * Usado en: login.feature (smoke + scenario outline de credenciales inválidas)
-     */
-    @Given("el usuario intenta iniciar sesión con usuario {string} y contraseña {string}")
-    public void elUsuarioIntentaIniciarSesion(String usuario, String contrasena) {
+    @Given("el usuario intenta iniciar sesión con credenciales válidas desde Firebase")
+    public void elUsuarioIntentaIniciarSesionConCredencialesValidasDesdeFirebase() {
+        LoginData credentials = FirebaseClient.getInstance().getValidLoginCredentials();
         OnStage.theActorCalled("Usuario").wasAbleTo(
                 OpenUp.thePage(),
-                Login.onThePage(usuario, contrasena)
+                Login.onThePage(credentials.getUsername(), credentials.getPassword())
         );
     }
 

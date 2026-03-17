@@ -9,7 +9,7 @@
 - [x] **Ejecución paralela**
   - Configurado en `src/test/resources/junit-platform.properties`
   - Strategy `dynamic` con factor `0.5` (50% de CPUs disponibles)
-  - Reduce el tiempo total de ejecución al escalar la suite
+  - Bug de thread-safety corregido al actualizar Serenity de 4.2.1 a 4.2.34
 
 - [x] **Esperas explícitas / manejo de waits**
   - `WaitUntil` de Serenity Screenplay aplicado en `NavigateToPim`, `AddEmployee` y `SearchEmployee`
