@@ -6,6 +6,9 @@ import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
+import net.serenitybdd.screenplay.waits.WaitUntil;
+
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 public class Login implements Task {
 
@@ -22,6 +25,7 @@ public class Login implements Task {
 
     public <T extends Actor> void performAs(T actor){
           actor.attemptsTo(
+                WaitUntil.the(OrangeLoginPage.INPUT_USER, isVisible()).forNoMoreThan(20).seconds(),
                 Enter.theValue(strUser).into(OrangeLoginPage.INPUT_USER),
                 Enter.theValue(strPassword).into(OrangeLoginPage.INPUT_PASSWORD),
                 Click.on(OrangeLoginPage.SUBMIT_BUTTON)
