@@ -64,12 +64,25 @@ dependencies {
 
     // ========= LOGGING =========
     testImplementation "org.slf4j:slf4j-simple:2.0.13"
+
+    // ========= FIREBASE =========
+    testImplementation "com.google.firebase:firebase-admin:9.2.0"
 }
 
 test {
     useJUnitPlatform()
     systemProperties System.getProperties()
     finalizedBy 'aggregate'
+
+    def envFile = file('.env')
+    if (envFile.exists()) {
+        envFile.eachLine { line ->
+            if (line && !line.startsWith('#') && line.contains('=')) {
+                def (key, value) = line.split('=', 2)
+                environment key.trim(), value.trim()
+            }
+        }
+    }
 }
 
 sonar {

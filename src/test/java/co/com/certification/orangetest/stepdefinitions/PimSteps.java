@@ -1,5 +1,6 @@
 package co.com.certification.orangetest.stepdefinitions;
 
+import co.com.certification.orangetest.config.FirebaseClient;
 import co.com.certification.orangetest.model.EmployeeData;
 import co.com.certification.orangetest.questions.TheEmployeeListSize;
 import co.com.certification.orangetest.questions.TheEmployeeSearchResults;
@@ -12,13 +13,13 @@ import io.cucumber.java.en.When;
 import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.actors.OnStage;
 
-import java.util.List;
-
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
 public class PimSteps {
+
+    private String searchedEmployeeName;
 
     @When("el usuario navega al módulo PIM")
     public void elUsuarioNavegaAlModuloPim() {
@@ -32,9 +33,9 @@ public class PimSteps {
         );
     }
 
-    @When("el usuario agrega un empleado con los siguientes datos")
-    public void elUsuarioAgregaUnEmpleado(List<EmployeeData> empleados) {
-        EmployeeData empleado = empleados.get(0);
+    @When("el usuario agrega un empleado con datos de Firebase")
+    public void elUsuarioAgregaUnEmpleadoDesdeFirebase() {
+        EmployeeData empleado = FirebaseClient.getInstance().getEmployeeAddData();
         OnStage.theActorInTheSpotlight().attemptsTo(
                 AddEmployee.withName(empleado.getFirstName(), empleado.getLastName())
         );
@@ -47,15 +48,16 @@ public class PimSteps {
         );
     }
 
-    @When("el usuario busca el empleado {string}")
-    public void elUsuarioBuscaElEmpleado(String nombre) {
-        OnStage.theActorInTheSpotlight().attemptsTo(SearchEmployee.byName(nombre));
+    @When("el usuario busca el empleado registrado en Firebase")
+    public void elUsuarioBuscaElEmpleadoDesdeFirebase() {
+        searchedEmployeeName = FirebaseClient.getInstance().getEmployeeSearchName();
+        OnStage.theActorInTheSpotlight().attemptsTo(SearchEmployee.byName(searchedEmployeeName));
     }
 
-    @Then("el sistema muestra al menos un resultado con {string}")
-    public void elSistemaMuestraAlMenosUnResultado(String nombre) {
+    @Then("el sistema muestra resultados para el empleado buscado")
+    public void elSistemaMuestraResultadosParaElEmpleadoBuscado() {
         OnStage.theActorInTheSpotlight().should(
-                GivenWhenThen.seeThat(TheEmployeeSearchResults.containing(nombre), is(true))
+                GivenWhenThen.seeThat(TheEmployeeSearchResults.containing(searchedEmployeeName), is(true))
         );
     }
 }

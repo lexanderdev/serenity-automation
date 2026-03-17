@@ -1,5 +1,7 @@
 package co.com.certification.orangetest.stepdefinitions;
 
+import co.com.certification.orangetest.config.FirebaseClient;
+import co.com.certification.orangetest.model.LoginData;
 import co.com.certification.orangetest.questions.TheAlertMessage;
 import co.com.certification.orangetest.questions.TheDashboard;
 import co.com.certification.orangetest.tasks.Login;
@@ -10,6 +12,8 @@ import io.cucumber.java.en.Then;
 import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
+
+import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -29,9 +33,10 @@ public class AuthenticationSteps {
      */
     @Given("el usuario Admin está autenticado en OrangeHRM")
     public void elUsuarioAdminEstaAutenticado() {
+        LoginData credentials = FirebaseClient.getInstance().getValidLoginCredentials();
         OnStage.theActorCalled("Admin").wasAbleTo(
                 OpenUp.thePage(),
-                Login.onThePage("Admin", "admin123")
+                Login.onThePage(credentials.getUsername(), credentials.getPassword())
         );
     }
 
@@ -56,10 +61,22 @@ public class AuthenticationSteps {
         );
     }
 
-    @Then("el sistema muestra el mensaje de error {string}")
-    public void elSistemaMuestraElMensajeDeError(String mensajeEsperado) {
+    private LoginData invalidCredential;
+
+    @Given("el usuario intenta iniciar sesión con credenciales inválidas desde Firebase")
+    public void elUsuarioIntentaIniciarSesionConCredencialesInvalidasDesdeFirebase() {
+        List<LoginData> invalidCredentials = FirebaseClient.getInstance().getInvalidLoginCredentials();
+        invalidCredential = invalidCredentials.get(0);
+        OnStage.theActorCalled("Usuario").wasAbleTo(
+                OpenUp.thePage(),
+                Login.onThePage(invalidCredential.getUsername(), invalidCredential.getPassword())
+        );
+    }
+
+    @Then("el sistema muestra el mensaje de error correspondiente")
+    public void elSistemaMuestraElMensajeDeErrorCorrespondiente() {
         OnStage.theActorInTheSpotlight().should(
-                GivenWhenThen.seeThat(TheAlertMessage.displayed(), containsString(mensajeEsperado))
+                GivenWhenThen.seeThat(TheAlertMessage.displayed(), containsString(invalidCredential.getMessage()))
         );
     }
 }
