@@ -1,17 +1,15 @@
 package co.com.certification.orangetest.stepdefinitions;
 
+import co.com.certification.orangetest.questions.TheAlertMessage;
+import co.com.certification.orangetest.questions.TheDashboard;
 import co.com.certification.orangetest.tasks.Login;
 import co.com.certification.orangetest.tasks.OpenUp;
-import co.com.certification.orangetest.userinterface.DashboardPage;
-import co.com.certification.orangetest.userinterface.OrangeLoginPage;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
-import net.serenitybdd.screenplay.questions.Text;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -54,14 +52,14 @@ public class AuthenticationSteps {
     @Then("el usuario visualiza el Dashboard de OrangeHRM")
     public void elUsuarioVisualizaElDashboard() {
         OnStage.theActorInTheSpotlight().should(
-                GivenWhenThen.seeThat(Text.of(DashboardPage.DASHBOARD_TITLE), equalTo("Dashboard"))
+                GivenWhenThen.seeThat(TheDashboard.title(), equalTo("Dashboard"))
         );
     }
 
     @Then("el sistema muestra el mensaje de error {string}")
     public void elSistemaMuestraElMensajeDeError(String mensajeEsperado) {
         OnStage.theActorInTheSpotlight().should(
-                GivenWhenThen.seeThat(Text.of(OrangeLoginPage.ALERT_MESSAGE), containsString(mensajeEsperado))
+                GivenWhenThen.seeThat(TheAlertMessage.displayed(), containsString(mensajeEsperado))
         );
     }
 }

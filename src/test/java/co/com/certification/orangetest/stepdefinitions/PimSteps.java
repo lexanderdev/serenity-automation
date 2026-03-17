@@ -2,21 +2,21 @@ package co.com.certification.orangetest.stepdefinitions;
 
 import co.com.certification.orangetest.model.EmployeeData;
 import co.com.certification.orangetest.questions.TheEmployeeListSize;
+import co.com.certification.orangetest.questions.TheEmployeeSearchResults;
+import co.com.certification.orangetest.questions.ThePersonalDetails;
 import co.com.certification.orangetest.tasks.pim.AddEmployee;
 import co.com.certification.orangetest.tasks.pim.NavigateToPim;
 import co.com.certification.orangetest.tasks.pim.SearchEmployee;
-import co.com.certification.orangetest.userinterface.pim.AddEmployeePage;
-import co.com.certification.orangetest.userinterface.pim.EmployeeListPage;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import java.util.List;
 import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.actors.OnStage;
-import net.serenitybdd.screenplay.questions.Text;
+
+import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 
 public class PimSteps {
 
@@ -43,7 +43,7 @@ public class PimSteps {
     @Then("el sistema muestra los detalles del empleado recién creado")
     public void elSistemaMuestraLosDetallesDelEmpleado() {
         OnStage.theActorInTheSpotlight().should(
-                GivenWhenThen.seeThat(Text.of(AddEmployeePage.PERSONAL_DETAILS_HEADER), containsString("Personal Details"))
+                GivenWhenThen.seeThat(ThePersonalDetails.header(), containsString("Personal Details"))
         );
     }
 
@@ -55,7 +55,7 @@ public class PimSteps {
     @Then("el sistema muestra al menos un resultado con {string}")
     public void elSistemaMuestraAlMenosUnResultado(String nombre) {
         OnStage.theActorInTheSpotlight().should(
-                GivenWhenThen.seeThat(Text.of(EmployeeListPage.EMPLOYEE_NAMES), containsString(nombre))
+                GivenWhenThen.seeThat(TheEmployeeSearchResults.containing(nombre), is(true))
         );
     }
 }

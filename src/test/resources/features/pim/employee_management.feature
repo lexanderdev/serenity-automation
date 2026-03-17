@@ -1,5 +1,5 @@
 #language:en
-#Author: Alex Vanegas
+#Author: Alexander Vanegas
 
 @pim
 Feature: Gestión de empleados en el módulo PIM
@@ -26,5 +26,5 @@ Feature: Gestión de empleados en el módulo PIM
   @regression @search-employee
   Scenario: búsqueda de un empleado existente por nombre
     When el usuario navega al módulo PIM
-    And el usuario busca el empleado "Admin"
-    Then el sistema muestra al menos un resultado con "Admin"
+    And el usuario busca el empleado "Amelia"
+    Then el sistema muestra al menos un resultado con "Amelia"
