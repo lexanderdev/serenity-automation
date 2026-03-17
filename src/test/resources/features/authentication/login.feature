@@ -13,11 +13,6 @@ Feature: Autenticación en OrangeHRM
     Then el usuario visualiza el Dashboard de OrangeHRM
 
   @regression @login-fallido
-  Scenario Outline: inicio de sesión fallido con credenciales inválidas
-    Given el usuario intenta iniciar sesión con usuario "<usuario>" y contraseña "<contrasena>"
-    Then el sistema muestra el mensaje de error "<mensaje>"
-
-    Examples:
-      | usuario   | contrasena | mensaje             |
-      | Admin     | wrongpass  | Invalid credentials |
-      | wronguser | admin123   | Invalid credentials |
+  Scenario: inicio de sesión fallido con credenciales inválidas
+    Given el usuario intenta iniciar sesión con credenciales inválidas desde Firebase
+    Then el sistema muestra el mensaje de error correspondiente

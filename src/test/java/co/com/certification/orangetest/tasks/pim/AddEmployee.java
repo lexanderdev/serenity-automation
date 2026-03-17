@@ -8,6 +8,9 @@ import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.actions.Clear;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
+import net.serenitybdd.screenplay.waits.WaitUntil;
+
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 public class AddEmployee implements Task {
 
@@ -27,10 +30,12 @@ public class AddEmployee implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 Click.on(EmployeeListPage.BUTTON_ADD),
+                WaitUntil.the(AddEmployeePage.INPUT_FIRST_NAME, isVisible()).forNoMoreThan(10).seconds(),
                 Clear.field(AddEmployeePage.INPUT_FIRST_NAME),
                 Enter.theValue(firstName).into(AddEmployeePage.INPUT_FIRST_NAME),
                 Enter.theValue(lastName).into(AddEmployeePage.INPUT_LAST_NAME),
-                Click.on(AddEmployeePage.BUTTON_SAVE)
+                Click.on(AddEmployeePage.BUTTON_SAVE),
+                WaitUntil.the(AddEmployeePage.PERSONAL_DETAILS_HEADER, isVisible()).forNoMoreThan(20).seconds()
         );
     }
 }

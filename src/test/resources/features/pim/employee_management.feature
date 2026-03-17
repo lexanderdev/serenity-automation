@@ -18,13 +18,11 @@ Feature: Gestión de empleados en el módulo PIM
   @regression @add-employee
   Scenario: agregar un nuevo empleado
     When el usuario navega al módulo PIM
-    And el usuario agrega un empleado con los siguientes datos
-      | firstName | lastName |
-      | Juan      | Prueba   |
+    And el usuario agrega un empleado con datos de Firebase
     Then el sistema muestra los detalles del empleado recién creado
 
   @regression @search-employee
   Scenario: búsqueda de un empleado existente por nombre
     When el usuario navega al módulo PIM
-    And el usuario busca el empleado "Amelia"
-    Then el sistema muestra al menos un resultado con "Amelia"
+    And el usuario busca el empleado registrado en Firebase
+    Then el sistema muestra resultados para el empleado buscado

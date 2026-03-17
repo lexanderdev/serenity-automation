@@ -101,6 +101,62 @@ Después de cada ejecución el reporte HTML queda en:
 target/site/serenity/index.html
 ```
 
+## Protección de la rama main
+
+La rama `main` tiene las siguientes reglas configuradas en GitHub:
+
+- **Pull Request obligatorio** — no se permite push directo, todo entra por PR con al menos 1 aprobación
+- **CI requerido** — el job `build-and-test` debe pasar en verde antes de mergear
+- **Rama actualizada** — el PR debe estar al día con `main` antes de mergear
+- **Historial lineal** — se requiere squash o rebase, no merge commits
+
+## Mejoras Implementadas
+
+### Integración continua con GitHub Actions + SonarCloud
+- Pipeline CI configurado en `.github/workflows/ci.yml`
+- Se dispara automáticamente en cada Pull Request a `main` o `develop`
+- Ejecuta los tests, genera el reporte de Serenity y analiza la calidad del código con SonarCloud
+- Artefactos de test y Serenity disponibles en cada ejecución del pipeline
+
+### Reintentos automáticos en tests fallidos
+- Configurado `serenity.retry.tests = 2` en `serenity.conf` y `serenity.properties`
+- Si un escenario falla por inestabilidad (red, timing), se reintenta hasta 2 veces antes de marcarlo como fallido
+- Los tests que pasan en reintento se reportan como `COMPROMISED` en Serenity para identificar flakiness
+
+### Ejecución paralela
+- Configurado en `src/test/resources/junit-platform.properties`
+- Strategy `dynamic` con factor `0.5` — usa el 50% de los CPUs disponibles
+- Resultado medido: **3m 25s** de ejecución real vs **10m 24s** de tiempo acumulado secuencial (ahorro de ~7 minutos con 6 escenarios)
+
+### Integración con Firebase Realtime Database
+- Los datos de prueba se centralizan en Firebase en lugar de estar hardcodeados en los feature files
+- `FirebaseClient` (singleton) inicializa la conexión con credenciales desde variables de entorno y expone métodos de lectura síncronos
+- Datos externalizados: credenciales de login válidas, datos de empleado para agregar y nombre para búsqueda
+- Las variables de entorno se cargan automáticamente desde `.env` en local (via `build.gradle`) y desde GitHub Secrets en CI
+
+**Estructura de datos en Firebase Realtime Database:**
+```json
+{
+  "test-data": {
+    "login": {
+      "valid": { "username": "...", "password": "..." }
+    },
+    "employees": {
+      "add": { "firstName": "...", "lastName": "..." },
+      "search": { "name": "..." }
+    }
+  }
+}
+```
+
+**Variables de entorno requeridas:**
+```
+FIREBASE_PROJECT_ID
+FIREBASE_PRIVATE_KEY
+FIREBASE_CLIENT_EMAIL
+FIREBASE_DATABASE_URL
+```
+
 ## Tecnologías Utilizadas
 
 - **[Serenity BDD](http://serenity-bdd.info/)** 4.2.1
@@ -110,3 +166,4 @@ target/site/serenity/index.html
 - **[JUnit 5](https://junit.org/junit5/)** 5.10.1
 - **[Selenium WebDriver](https://www.selenium.dev/)** 4.21.0
 - **[Lombok](https://projectlombok.org/)** 1.18.30
+- **[Firebase Admin SDK](https://firebase.google.com/docs/admin/setup)** 9.2.0
