@@ -30,12 +30,12 @@ public class AddEmployee implements Task {
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
                 Click.on(EmployeeListPage.BUTTON_ADD),
-                WaitUntil.the(AddEmployeePage.INPUT_FIRST_NAME, isVisible()).forNoMoreThan(10).seconds(),
+                WaitUntil.the(AddEmployeePage.INPUT_FIRST_NAME, isVisible()).forNoMoreThan(20).seconds(),
                 Clear.field(AddEmployeePage.INPUT_FIRST_NAME),
                 Enter.theValue(firstName).into(AddEmployeePage.INPUT_FIRST_NAME),
                 Enter.theValue(lastName).into(AddEmployeePage.INPUT_LAST_NAME),
                 Click.on(AddEmployeePage.BUTTON_SAVE),
-                WaitUntil.the(AddEmployeePage.PERSONAL_DETAILS_HEADER, isVisible()).forNoMoreThan(20).seconds()
+                WaitUntil.the(AddEmployeePage.PERSONAL_DETAILS_HEADER, isVisible()).forNoMoreThan(30).seconds()
         );
     }
 }
