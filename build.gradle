@@ -93,6 +93,8 @@ sonar {
 
         // Definimos src/test/java como la fuente principal de análisis
         property "sonar.sources", "src/test/java"
+        // Evita que el plugin de Gradle agregue src/test/java también como tests (doble indexación)
+        property "sonar.tests", ""
         // Es vital que esta ruta sea exacta para que Sonar "entienda" el código Java
         property "sonar.java.binaries", "build/classes/java/test"
 
