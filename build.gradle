@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'net.serenity-bdd.serenity-gradle-plugin' version '4.2.1'
+    id 'net.serenity-bdd.serenity-gradle-plugin' version '4.2.34'
     id "org.sonarqube" version "4.4.1.3373"
 }
 
@@ -20,7 +20,7 @@ java {
 }
 
 ext {
-    serenityVersion = '4.2.1'
+    serenityVersion = '4.2.34'
     cucumberVersion = '7.15.0'
     junitVersion = '5.10.1'
     lombokVersion = '1.18.30'
@@ -39,7 +39,7 @@ dependencies {
     testImplementation "net.serenity-bdd:serenity-screenplay:${serenityVersion}"
     testImplementation "net.serenity-bdd:serenity-screenplay-webdriver:${serenityVersion}"
     testImplementation "net.serenity-bdd:serenity-cucumber:${serenityVersion}"
-    testImplementation "net.serenity-bdd:serenity-junit5:4.2.1"
+    testImplementation "net.serenity-bdd:serenity-junit5:${serenityVersion}"
 
 
 
@@ -87,12 +87,14 @@ test {
 
 sonar {
     properties {
-        property "sonar.projectKey",  "serenity-automation123"
-        property "sonar.organization", "serenity-automation"
+        property "sonar.projectKey",  "lexanderdev_serenity-automation"
+        property "sonar.organization", "lexanderdev"
         property "sonar.host.url", "https://sonarcloud.io"
 
         // Definimos src/test/java como la fuente principal de análisis
         property "sonar.sources", "src/test/java"
+        // Evita que el plugin de Gradle agregue src/test/java también como tests (doble indexación)
+        property "sonar.tests", ""
         // Es vital que esta ruta sea exacta para que Sonar "entienda" el código Java
         property "sonar.java.binaries", "build/classes/java/test"
 
