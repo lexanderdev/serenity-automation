@@ -99,9 +99,9 @@ src/test/
 
 ## Reporte de Resultados
 
-Después de cada ejecución el reporte HTML queda en:
+Después de cada ejecución el jobs  publish-report genera el reporte HTML  en:
 ```
-target/site/serenity/index.html
+https://lexanderdev.github.io/serenity-automation/
 ```
 
 ## Protección de la rama main
