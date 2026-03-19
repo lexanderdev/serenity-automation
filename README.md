@@ -12,9 +12,8 @@
 Este proyecto contiene pruebas de aceptación automatizadas para la aplicación [OrangeHRM](https://opensource-demo.orangehrmlive.com), desarrollado utilizando el framework Serenity BDD y el patrón de diseño Screenplay.
 
 ## Características
-
 - **Serenity BDD**: Genera documentación viva y reportes detallados sobre la ejecución de las pruebas.
-- **Patrón Screenplay**: Pruebas organizadas en Tasks, Questions y UserInterface con separación clara de responsabilidades.
+- **Patrón Screenplay**: Pruebas organizadas en Tasks, Questions, Model , Stepdefinitions y UserInterface con separación clara de responsabilidades.
 - **Behavior-Driven Development (BDD)**: Escenarios escritos en Gherkin (`.feature`), organizados por módulo funcional.
 - **Gradle**: Gestiona las dependencias y la ejecución de las pruebas.
 - **Configuración Multi-ambiente**: Soporta los entornos `default`, `dev`, `staging` y `prod`.
@@ -31,7 +30,6 @@ Este proyecto contiene pruebas de aceptación automatizadas para la aplicación 
 git clone <URL-DEL-REPOSITORIO>
 cd orange
 ```
-
 El proyecto usa **Gradle Wrapper** — no es necesario instalar Gradle manualmente.
 
 ## Ejecución de las Pruebas
@@ -40,12 +38,10 @@ El proyecto usa **Gradle Wrapper** — no es necesario instalar Gradle manualmen
 ```sh
 ./gradlew clean test aggregate
 ```
-
 ### Con navegador visible (modo interactivo)
 ```sh
 ./gradlew clean test aggregate -Dchrome.switches="--start-maximized"
 ```
-
 ### Con navegador visible y ejecución lenta (para depuración)
 ```sh
 ./gradlew clean test aggregate -Dchrome.switches="--start-maximized" -Dserenity.step.delay=1000
@@ -56,7 +52,6 @@ El proyecto usa **Gradle Wrapper** — no es necesario instalar Gradle manualmen
 ./gradlew clean test aggregate -Denvironment=staging
 ./gradlew clean test aggregate -Denvironment=dev
 ```
-
 ### Por tag
 ```sh
 ./gradlew clean test aggregate -Dcucumber.filter.tags="@smoke"
@@ -66,14 +61,14 @@ El proyecto usa **Gradle Wrapper** — no es necesario instalar Gradle manualmen
 
 ## Escenarios Implementados
 
-### Módulo: Autenticación (`features/authentication/login.feature`)
+### Módulo: Autenticación 
 
 | Escenario | Tag | Estado |
 |---|---|---|
 | Inicio de sesión exitoso con credenciales válidas | `@smoke @login-exitoso` | ✅ Completado |
 | Inicio de sesión fallido — credenciales inválidas (×2) | `@regression @login-fallido` | ✅ Completado |
 
-### Módulo: PIM — Gestión de Empleados (`features/pim/employee_management.feature`)
+### Módulo: PIM — Gestión de Empleados 
 
 | Escenario | Tag | Estado |
 |---|---|---|
@@ -105,7 +100,6 @@ src/test/
 ## Reporte de Resultados
 
 Después de cada ejecución el reporte HTML queda en:
-
 ```
 target/site/serenity/index.html
 ```
@@ -118,8 +112,6 @@ La rama `main` tiene las siguientes reglas configuradas en GitHub:
 - **CI requerido** — el job `build-and-test` debe pasar en verde antes de mergear
 - **Rama actualizada** — el PR debe estar al día con `main` antes de mergear
 - **Historial lineal** — se requiere squash o rebase, no merge commits
-
-## Mejoras Implementadas
 
 ### Integración continua con GitHub Actions + SonarCloud
 - Pipeline CI configurado en `.github/workflows/ci.yml`
@@ -142,37 +134,3 @@ La rama `main` tiene las siguientes reglas configuradas en GitHub:
 - `FirebaseClient` (singleton) inicializa la conexión con credenciales desde variables de entorno y expone métodos de lectura síncronos
 - Datos externalizados: credenciales de login válidas, datos de empleado para agregar y nombre para búsqueda
 - Las variables de entorno se cargan automáticamente desde `.env` en local (via `build.gradle`) y desde GitHub Secrets en CI
-
-**Estructura de datos en Firebase Realtime Database:**
-```json
-{
-  "test-data": {
-    "login": {
-      "valid": { "username": "...", "password": "..." }
-    },
-    "employees": {
-      "add": { "firstName": "...", "lastName": "..." },
-      "search": { "name": "..." }
-    }
-  }
-}
-```
-
-**Variables de entorno requeridas:**
-```
-FIREBASE_PROJECT_ID
-FIREBASE_PRIVATE_KEY
-FIREBASE_CLIENT_EMAIL
-FIREBASE_DATABASE_URL
-```
-
-## Tecnologías Utilizadas
-
-- **[Serenity BDD](http://serenity-bdd.info/)** 4.2.1
-- **[Cucumber](https://cucumber.io/)** 7.15.0
-- **[Java](https://www.oracle.com/java/)** 21
-- **[Gradle](https://gradle.org/)**
-- **[JUnit 5](https://junit.org/junit5/)** 5.10.1
-- **[Selenium WebDriver](https://www.selenium.dev/)** 4.21.0
-- **[Lombok](https://projectlombok.org/)** 1.18.30
-- **[Firebase Admin SDK](https://firebase.google.com/docs/admin/setup)** 9.2.0
